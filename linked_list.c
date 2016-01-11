@@ -35,7 +35,7 @@ List *init_list()
 void destroy(List *l)
 {
 	/* check if list is already empty */
-	if(l->length == 0)
+	if(l->length == 0) // T: check list l is not null
 	{
 		return;
 	}
@@ -65,7 +65,7 @@ Node *delete(List *l, Node *pos)
 	}
 
 	/* check if pos is first and chain it correctly */
-	if(l->first == pos)
+	if(l->first == pos) // T: check list l is not null
 	{
 		l->first = pos->next;
 		next_pos = pos->next;
@@ -108,7 +108,7 @@ Node *add_node(List *l, int value)
 		return NULL;
 	}
 	np->val = value;
-	if(l->length == 0)
+	if(l->length == 0) // T: check list l is not null
 	{
 		l->first = np;
 		l->last = np;
@@ -137,7 +137,7 @@ Node *add_node(List *l, int value)
  */
 void set_val(int value, Node *n, List *l)
 {
-	if(n == NULL)
+	if(n == NULL) // T: check list l is not null
 	{
 		return;
 	}
@@ -153,10 +153,10 @@ void set_val(int value, Node *n, List *l)
  *
  *
  */
-void print_list(List *l)
+void print_list(List *l) // T: put this code in a debug flag, with the include of stdio
 {
 	Node *np = l->first;
-	while(np != NULL)
+	while(np != NULL) // T: check list l is not null
 	{
 		printf("%d ", np->val);
 		np = np->next;
@@ -175,7 +175,7 @@ void print_list(List *l)
  */
 Node *get_prev(Node *n)
 {
-	if(n == NULL || n->prev == NULL)
+	if(n == NULL || n->prev == NULL) // second condition not necessary 
 	{
 		return NULL;
 	}
@@ -184,7 +184,7 @@ Node *get_prev(Node *n)
 }
 
 /*
- * Node *get_prev(Node *n)
+ * Node *get_prev(Node *n) // T: ahhh, busted... Copy paste!
  *
  * given a node n returns the pointer to
  * the following node in the list.
@@ -194,7 +194,7 @@ Node *get_prev(Node *n)
  */
 Node *get_next(Node *n)
 {
-	if(n == NULL || n->next == NULL)
+	if(n == NULL || n->next == NULL) // second condition not necessary 
 	{
 		return NULL;
 	}
@@ -243,7 +243,7 @@ Node *get_last(List *l)
  */
 int get_val(Node *n)
 {
-	return n->val;
+	return n->val; // T: check Node n is not null
 }
 
 /*
@@ -275,4 +275,3 @@ int get_length(List *l)
 	}
 	return l->length;
 }
-
