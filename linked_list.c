@@ -1,6 +1,5 @@
 #include "linked_list.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 /*
  * List *init_list()
@@ -34,6 +33,9 @@ List *init_list()
  */
 void destroy(List *l)
 {
+	if(l == NULL)
+		return;
+
 	/* check if list is already empty */
 	if(l->length == 0)
 	{
@@ -58,6 +60,9 @@ void destroy(List *l)
  */
 Node *delete(List *l, Node *pos)
 {
+	if(l == NULL)
+		return NULL;
+
 	Node *next_pos;
 	if(pos == NULL)
 	{
@@ -69,6 +74,11 @@ Node *delete(List *l, Node *pos)
 	{
 		l->first = pos->next;
 		next_pos = pos->next;
+		/*update the previous element of the new first node*/
+		/*The condition is necessary in case the deleted element
+		 * is the only element of the list*/
+		if(next_pos != NULL)
+			next_pos->prev = NULL;
 	}
 	else if(l->last == pos)
 	{
@@ -101,12 +111,18 @@ Node *delete(List *l, Node *pos)
  */
 Node *add_node(List *l, int value)
 {
+	if(l == NULL)
+		return NULL;
+
 	/* allocate block for the node and assign data */
 	Node *np = (Node *)malloc(sizeof(Node));
 	if(np == NULL)
 	{
 		return NULL;
 	}
+
+	np->next = NULL;
+	np->prev = NULL;
 	np->val = value;
 	if(l->length == 0)
 	{
@@ -137,7 +153,7 @@ Node *add_node(List *l, int value)
  */
 void set_val(int value, Node *n, List *l)
 {
-	if(n == NULL)
+	if(n == NULL || l == NULL)
 	{
 		return;
 	}
@@ -153,8 +169,13 @@ void set_val(int value, Node *n, List *l)
  *
  *
  */
+#ifdef DEBUG
+#include <stdio.h>
 void print_list(List *l)
 {
+	if(l == NULL)
+		return;
+
 	Node *np = l->first;
 	while(np != NULL)
 	{
@@ -163,7 +184,7 @@ void print_list(List *l)
 	}
 	printf("\n");
 }
-
+#endif
 /*
  * Node *get_prev(Node *n)
  *
@@ -175,7 +196,7 @@ void print_list(List *l)
  */
 Node *get_prev(Node *n)
 {
-	if(n == NULL || n->prev == NULL)
+	if(n == NULL)
 	{
 		return NULL;
 	}
@@ -184,7 +205,7 @@ Node *get_prev(Node *n)
 }
 
 /*
- * Node *get_prev(Node *n)
+ * Node *get_next(Node *n)
  *
  * given a node n returns the pointer to
  * the following node in the list.
@@ -211,7 +232,7 @@ Node *get_next(Node *n)
  */
 Node *get_first(List *l)
 {
-	if(l == NULL || l->first == NULL)
+	if(l == NULL)
 	{
 		return NULL;
 	}
@@ -219,7 +240,7 @@ Node *get_first(List *l)
 }
 
 /*
- * Node *get_first(List *l)
+ * Node *get_last(List *l)
  *
  * given a list pointer l, returns the last node
  * of the list. NULL is returned if the last node
@@ -228,7 +249,7 @@ Node *get_first(List *l)
  */
 Node *get_last(List *l)
 {
-	if(l == NULL || l->last == NULL)
+	if(l == NULL)
 	{
 		return NULL;
 	}
@@ -243,6 +264,9 @@ Node *get_last(List *l)
  */
 int get_val(Node *n)
 {
+	if(n == NULL)
+		return 0;
+
 	return n->val;
 }
 

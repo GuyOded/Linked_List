@@ -7,6 +7,7 @@
 
 #ifndef LINKED_LIST_H_
 #define LINKED_LIST_H_
+#define DEBUG
 
 typedef struct list_node {
 	struct list_node *next;
@@ -33,7 +34,9 @@ void set_val(int value, Node *n, List *l);
 
 int get_val(Node *n);
 
+#ifdef DEBUG
 void print_list(List *l);
+#endif
 
 Node *get_prev(Node *n);
 
